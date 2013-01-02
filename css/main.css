@@ -1,0 +1,430 @@
+/* ==========================================================================
+   HTML5 Boilerplate styles - h5bp.com (generated via initializr.com)
+   ========================================================================== */
+
+body {
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.chromeframe, noscript {
+	padding: 1em;
+	border: 3px dotted red;
+	background: white;
+	position: fixed;
+	z-index: 1000;
+	top: 20px;
+	left: 20px;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+html, body {
+	overflow: hidden;
+	height: 100%;
+	font-family: 'Donegal One', serif;
+}
+
+a {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+body.start {
+	background-color: #aaaaaa;
+	color: #000000;
+}
+
+body.start a {
+	color: #ffffff;
+}
+
+body.light, body.light input  {
+	background-color: #ffffff;
+	color: #000000;
+}
+
+body.light-now a {
+	color: #9c8653;
+}
+
+body.light-now span.chosenLink {
+	color: #666666;
+}
+
+body.darkness, body.darkness input {
+	background-color: #000000;
+	color: #ffffff;
+}
+
+body.darkness-now a {
+	color: #c391ab;
+}
+
+body.darkness-now span.chosenLink {
+	color: #cccccc;
+}
+
+#story {
+	min-width: 110%;
+	min-height: 110%;
+	position: relative;
+	top: -1000px;
+	left: -4760px;
+}
+
+#other {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.node {
+	position: relative;
+	max-width: 480px;
+	text-align: center;
+	font-size: 1.2em;
+	cursor: default;
+}
+
+.cloudItem {
+	position: absolute;
+}
+
+.notification {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	padding: 0.8em;
+	text-align: right;
+	font-size: smaller;
+	font-style: italic;
+	opacity: 0.9;
+}
+
+#splash {
+	height: 100%;
+	width: 100%;
+	max-height: 650px;
+	max-width: 600px;
+	margin: auto;
+	text-align: center;
+	position: relative;
+}
+
+#cover {
+	position: absolute;
+	display: block;
+	margin: auto;
+	bottom: 0;
+	left: 0;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+#cover img {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+#ready, #loading {
+	display: block;
+	margin: 0 auto;
+	position: absolute;
+	bottom: 1em;
+	color: white;
+	font-style: italic;
+	font-size: 2em;
+}
+
+#ready {
+	cursor: pointer;
+	left: 0;
+	width: 100%;
+	max-width: 600px;
+}
+
+#loading {
+	left: 48%; 
+}
+
+#prompt {
+	padding-right:0.5em;
+}
+
+#say, #say.nofocushint:focus {
+	border: none;
+	background-color: transparent;
+	font-family: 'Donegal One', serif;
+	opacity: 1;
+	outline: none;
+}
+
+#say:focus {
+	outline: none;
+}
+
+#say.nofocushint {
+	outline: dashed;
+	background-color: #999999;
+	opacity: 0.5;
+}
+
+.node-result {
+	font-family: 'Pinyon Script', cursive;
+	font-size: 72px;
+}
+
+.node-result img {
+	position: relative;
+	left: -70px;
+	top: -50px;
+}
+
+.node-restart a {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	font-size: 12px;
+	padding: 5px;
+	opacity: 0.9;
+}
+
+#myMessage, #itsMessage {
+	font-family: 'Pinyon Script', cursive;
+	font-size: 28px;
+}
+
+body.light #myMessage, body.darkness #itsMessage {
+	text-align: left;
+}
+
+body.light #itsMessage, body.darkness #myMessage {
+	text-align: right;
+}
+
+#credits {
+	font-size: 10px;
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	color: #aaaaaa;
+	font-style: italic;
+}
+
+.programming-error {
+	color: #fff;
+	background-color: #600;
+	font-weight: bold;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 0.5em;
+}
+
+.ui-button {
+	position: fixed;
+	right: 0;
+	padding: 5px;
+	z-index: 10;
+	width: 30px;
+	height: 30px;
+}
+
+.ui-button:hover {
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+	margin-top: -10px;
+}
+
+#mute-button {
+	top: 40px;
+}
+
+#fullscreen-button {
+	top: 0px;
+}
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+       only screen and (min-resolution: 144dpi) {
+
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 100%;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   Print styles
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
