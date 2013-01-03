@@ -1498,17 +1498,3 @@ function finalWord() {
     
     return 'Indetermination'; // if this is ever returned there's a bug   
 }
-
-
-function notify( message ) {
-    $( '<div></div>' )
-        .addClass( 'notification' )
-        .css( 'background-color', $( 'body' ).css( 'background-color' ) )
-        .css( 'color', $( 'body' ).css( 'color' ) )
-        .text( message )
-        .hide()
-        .appendTo( 'body' )
-        .fadeIn( 3000 )
-        .delay( 8000 )
-        .fadeOut();
-}

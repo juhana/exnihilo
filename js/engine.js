@@ -87,12 +87,25 @@ function nodeChosen( node ) {
     return $.inArray( node, myChoices ) > -1;
 } 
 
+function notify( message ) {
+    $( '<div></div>' )
+        .addClass( 'notification' )
+        .css( 'background-color', $( 'body' ).css( 'background-color' ) )
+        .css( 'color', $( 'body' ).css( 'color' ) )
+        .text( message )
+        .hide()
+        .appendTo( 'body' )
+        .fadeIn( 3000 )
+        .delay( 8000 )
+        .fadeOut();
+}
+
 function showNode( nodeName, scroll, $container ) {
     var node = nodes[ nodeName ];
     var delay = 5000;
     
     if( typeof $container === 'undefined' ) {
-        var $container = $( '#story' );
+        $container = $( '#story' );
     }
     else {
         $container = $( $container );
@@ -140,7 +153,7 @@ function showNode( nodeName, scroll, $container ) {
     var maxWidth = $( window ).width();
     
     $( '.node' ).each( function() {
-        $this = $( this );
+        var $this = $( this );
         maxHeight = Math.max( maxHeight, $this.position().top + $( window ).height() + $this.height() );
         maxWidth = Math.max( maxWidth, $this.position().left + $( window ).width() + $this.width() );    
     });
@@ -167,7 +180,7 @@ function showNode( nodeName, scroll, $container ) {
 }
     
 function startStory() {
-    var $container = $( '<div></div>' )
+    $( '<div></div>' )
         .attr( 'id', 'story' )
         .draggable({
             'stop': function() {
