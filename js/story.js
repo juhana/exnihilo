@@ -1104,10 +1104,10 @@ var nodes = {
                          
                          var $other = $( '<div></div>' )
                             .attr( 'id', 'other' )
+                            .appendTo( '#story' )
                             .css({
                                 'background-color': 'transparent'
-                            })
-                            .appendTo( '#story' );
+                            });
                             
                          $.each( itsChoices, function( index, choice ) {
                             var skipNodes = [ 
@@ -1271,7 +1271,7 @@ var nodes = {
         onEnter: function() {
             $( '.node-restart a' ).css( 
                 'background-color', $( 'body' ).css( 'background-color' ) 
-            ).on( 'click', function() { 
+            ).on( 'click', function( e ) { 
                 window.location.reload(); 
                 e.preventDefault();
                 e.stopPropagation(); 

@@ -41,6 +41,8 @@ $( function() {
         $( '#splash' ).fadeOut( 1000, startStory );
     });
     
+    // fix IE8 bug with the noscript tag
+    $( 'noscript' ).hide();
     
     // fullscreen controls
 
