@@ -249,7 +249,7 @@ var nodes = {
         
     'guide': {
         content: vorple.html.p( 
-            'The creatures explored their world and discovered new lands '
+            'The creatures explored their world, discovered new lands '
             + 'and gained new horizons. They strived '
             + vorple.html.link( 'deeper', 'deeper' )
             + ' and '
@@ -337,10 +337,10 @@ var nodes = {
         content: vorple.html.p(
             'I travelled the universe to find an escape from the loneliness. '
             + 'Ages passed and I found a world that was inhabited by creatures '
-            + 'unlike me. Still, they were there for me.'
+            + 'much unlike me. Still, they were there for me.'
         )
             + vorple.html.p(
-                'Now that I found them, I wanted to both ' 
+                'Now that I had found them, I wanted to both ' 
                 + vorple.html.link( 'embrace', 'embrace' ) 
                 + ' and ' + vorple.html.link( 'shun', 'shun' ) + ' them.'
             ),
@@ -360,8 +360,8 @@ var nodes = {
             else {
                 return vorple.html.p(
                     'My travels had not been in vain, even though the '
-                    + 'creatures were small and simple. I took to them and '
-                    + 'they accepted me, and it was to become my home.'
+                    + 'creatures were so small and simple. I took to them and '
+                    + 'they accepted me, and their world was to become my home.'
                 );
             }
         },
@@ -517,7 +517,7 @@ var nodes = {
             if( nodeChosen( 'join' ) ) {
                 return vorple.html.p(
                     'We built great and marvelous things. Towers that reached '
-                    + 'to the skies and machines that would take us beyond our '
+                    + 'the skies and machines that would take us outside our '
                     + 'world. We achieved things beyond our dreams.' 
                 );
             }
@@ -608,7 +608,7 @@ var nodes = {
     
     'control': {
         content: vorple.html.p(
-            'They took me as their god and I lead them into '
+            'They took me as their god. I led them into '
             + vorple.html.link( 'war', 'war' ) + ' and their world succumbed '
             + 'into ' + vorple.html.link( 'chaos', 'chaos' ) + '.'
         ),
@@ -661,7 +661,7 @@ var nodes = {
             else {
                 return vorple.html.p(
                     'Their society was in constant turmoil, falling down '
-                    + 'before they could rebuild. I kept them preoccupied '
+                    + 'before it could be rebuilt. I kept them preoccupied '
                     + 'with petty quarrels and self-interest.'
                 );
             }
@@ -772,9 +772,9 @@ var nodes = {
     
     'watch': {
         content: vorple.html.p(
-            'I watched as the creatures did what they did, but '
+            'I watched as the creatures went on with their lives, but '
             + 'I did not ' + vorple.html.link( 'understand', 'understand' )
-            + ' them, and I did not see a ' 
+            + ' them, and I did not see ' 
             + vorple.html.link( 'meaning', 'meaning' ) + ' in their ways.'
         ),
         left: 5500,
@@ -801,8 +801,7 @@ var nodes = {
                     + 'comprehend the uselessness and futility of their '
                     + 'menial tinkering in a speck of dust meaningless '
                     + 'to the universe. Their ignorance mocked me, enraged me.'
-                )
-                + vorple.html.p( 'They shall all die.' );
+                );
             }
             else {
                 return vorple.html.p(
@@ -857,7 +856,7 @@ var nodes = {
     
     'god': {
         content: vorple.html.p(
-            'They worshipped me, and I would rule them with iron grip. '
+            'They worshipped me, and I ruled them with iron grip. '
             + 'They too would feel my ' 
             + vorple.html.link( 'isolation', 'isolation' ) + ' and '
             + vorple.html.link( 'despair', 'despair' ) + '.'
