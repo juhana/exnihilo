@@ -67,11 +67,25 @@ function fadeToAudio( url ) {
 
 /** @private */
 function replayMusic() {
-    soundManager.getSoundById( 'bgMusic' ).play({
-        onfinish: function() {
-            replayMusic();
-        }
-    }); 
+    if( !soundManager.getSoundById( 'bgMusic' ) ) {
+        soundManager.createSound({
+            id: 'bgMusic',
+            url: 'music/oppression.mp3',
+            autoLoad: true,
+            autoPlay: true,
+            volume: baseVolume,
+            onfinish: function() {
+                replayMusic();
+            }
+        });
+    }
+    else {
+        soundManager.getSoundById( 'bgMusic' ).play({
+            onfinish: function() {
+                replayMusic();
+            }
+        });
+    } 
 }
 
 
@@ -87,18 +101,7 @@ if( isIos ) {
     });
 }
 else {
-    soundManager.onready( function() {
-        soundManager.createSound({
-            id: 'bgMusic',
-            url: 'music/oppression.mp3',
-            autoLoad: true,
-            autoPlay: true,
-            volume: baseVolume,
-            onfinish: function() {
-                replayMusic();
-            }
-        });
-    });
+    soundManager.onready( replayMusic );
 }
 
 $( function() {    

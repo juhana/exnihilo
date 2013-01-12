@@ -3,6 +3,22 @@
 error_reporting( E_ALL );
 ini_set( 'display_errors', 1 );
 
+// from the php manual
+function array_map_recursive($fn, $arr) {
+    $rarr = array();
+    foreach ($arr as $k => $v) {
+        $rarr[$k] = is_array($v)
+            ? array_map_recursive($fn, $v)
+            : $fn($v); 
+    }
+    return $rarr;
+}
+
+// I hate you, PHP.
+if( in_array( strtolower( ini_get( 'magic_quotes_gpc' ) ), array( '1', 'on' ) ) ) {
+    $_POST = array_map_recursive( 'stripslashes', $_POST );
+    $_GET = array_map_recursive( 'stripslashes', $_GET );
+}
 
 $dbSettings = array(
 	'host'		=> 'localhost',
