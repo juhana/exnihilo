@@ -39,6 +39,12 @@ soundManager.setup({ url: 'js/vendor/swf/' });
 /** @private */
 function fadeToAudio( url ) {
     var audio = soundManager.getSoundById( 'bgMusic' );
+    
+    // don't do anything if the music is not playing
+    if( !audio ) {
+        return;
+    }
+    
     var volume = audio.volume;
     
     audio.setVolume( Math.max( 0, volume - 3 ) );
@@ -148,7 +154,7 @@ $( function() {
 var nodes = {
     'start': {
         content: vorple.media.image( 'tribal1.png', { height: "181", width: "480" } )
-            + vorple.html.p( 'In the beginning there was nothing.' )
+            + vorple.html.p( 'In the Beginning there was nothing.' )
             + vorple.html.p( 'From nothing ' 
                 + vorple.html.link( 'light', 'light' ) + ' and ' 
                 + vorple.html.link( 'darkness', 'darkness' ) 
