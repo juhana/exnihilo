@@ -3,6 +3,21 @@
 error_reporting( E_ALL );
 ini_set( 'display_errors', 1 );
 
+
+/**
+ * Database settings
+ */
+
+$dbSettings = array(
+	'host'		=> 'localhost',
+	'database'	=> 'exnihilo',
+	'username'	=> 'root',
+	'password'	=> 'root',
+	'prefix'	=> ''	// if your web site provider forces prefixes in table names, write the prefix here
+);
+
+
+
 // from the php manual
 function array_map_recursive($fn, $arr) {
     $rarr = array();
@@ -20,13 +35,6 @@ if( in_array( strtolower( ini_get( 'magic_quotes_gpc' ) ), array( '1', 'on' ) ) 
     $_GET = array_map_recursive( 'stripslashes', $_GET );
 }
 
-$dbSettings = array(
-	'host'		=> 'localhost',
-	'database'	=> 'exnihilo',
-	'username'	=> 'root',
-	'password'	=> 'root',
-	'prefix'	=> ''	// if your web site provider forces prefixes in table names, write the prefix here
-);
 
 $dsn = "mysql:host={$dbSettings[ 'host' ]};dbname={$dbSettings[ 'database' ]};charset=utf-8;";
 

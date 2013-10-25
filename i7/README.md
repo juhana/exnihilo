@@ -1,0 +1,1 @@
+This is the Inform 7 text-only no-frills version of the story.
