@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Donegal One';
+    src: url('../fonts/Donegal_One/DonegalOne-regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Pinyon Script';
+    src: url('../fonts/Pinyon_Script/PinyonScript-Regular.ttf') format('truetype');
+}

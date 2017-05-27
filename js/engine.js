@@ -1,6 +1,6 @@
 /**
 @license
-Copyright (c) 2012-2013 Juhana Leinonen.
+Copyright (c) 2012-2017 Juhana Leinonen.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal in 
@@ -20,219 +20,274 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **/
 
-var currentNode = {};
-var myChoices = [];
+(function() {
+    "use strict";
 
-/** @const */
-vorple.media.defaults.imagePath = 'img/';
+    const engine = {
+        nodes: []
+    };
+    const myChoices = [];
+    let currentNode = {};
 
-/** @const */
-var isIos = /iPhone|iPad|iPod/i.test( navigator.userAgent );
+    $( function() {
+        // remove the spinner and show "click to begin"
+        $( '#loading' ).fadeOut();
+        $( '#ready' ).fadeTo( 600, 0.99 );
 
-$( function() {
-    // start Vorple
-    vorple.core.init();
+        $( document ).one( 'click', function() {
+            $( '#splash' ).fadeOut( 1000, startStory );
+        } );
+    } );
 
-    // remove the spinner and show "click to begin" 
-    $( '#loading' ).fadeOut();
-    $( '#ready' ).fadeTo( 'slow', 0.99 );
-    
-    $( document ).one( 'click', function() {
-        $( '#splash' ).fadeOut( 1000, startStory );
-    });
-    
-    // fix IE8 bug with the noscript tag
-    $( 'noscript' ).hide();
-    
-    // fullscreen controls
 
-    $( '#fullscreen-button' )
-        .on( 'click', function() {
-            var element = document.body;    
-            var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen; // || element.mozRequestFullScreen || element.msRequestFullScreen;
-
-            if( requestMethod && /chrome/.test( navigator.userAgent.toLowerCase() ) ) {
-                requestMethod.call( element, Element.ALLOW_KEYBOARD_INPUT );
+    /**
+     * Make a group of elements "float" around by changing their position
+     * a few pixels at a time
+     */
+    engine.cloud = function( elements, $container ) {
+        const move = function( $element ) {
+            // break the cycle if the element is not in the DOM
+            if( !$.contains( document, $element[0] ) ) {
+                return;
             }
-            else {
-                if( isIos ) {
-                    notify( 'Make a shortcut of this page and start the story '
-                        + 'using it and full screen mode is automatically applied.' );
-                }
-                else {
-                    // It's a shame, but only Chrome allows for keyboard input
-                    // in full screen mode.
-                    notify( 'Full screen mode is supported only on Chrome.' );
-                }
-            }
-        });
-});
 
-function cloud( elements, $container ) {
-    $.each( elements, function( index, element ) {
-        $( '<div></div>' )
-            .html( element.html )
-            .addClass( 'cloudItem' )
-            .css({ 'top': element.top, 'left': element.left })
-            .appendTo( $container )
-            .jqFloat({
-                width: 30,
-                height: 30,
-                speed: 10000
+            const deltaX = Math.floor( Math.random() * 3 ) - 1;
+            const deltaY = Math.floor( Math.random() * 3 ) - 1;
+
+            $element.css({ 
+                left: '+=' + deltaX,
+                top: '+=' + deltaY
             });
-    });
-}
 
-function nodeChosen( node ) {
-    return $.inArray( node, myChoices ) > -1;
-} 
+            // move again after a random amount of time
+            setTimeout( function() {
+                move( $element );
+            }, Math.ceil( Math.random() * 500 ) );
+        };
 
-function notify( message ) {
-    $( '<div></div>' )
-        .addClass( 'notification' )
-        .css( 'background-color', $( 'body' ).css( 'background-color' ) )
-        .css( 'color', $( 'body' ).css( 'color' ) )
-        .text( message )
-        .hide()
-        .appendTo( 'body' )
-        .fadeIn( 3000 )
-        .delay( 8000 )
-        .fadeOut();
-}
+        $.each( elements, function( index, element ) {
+            const $div = $( '<div></div>' )
+                .html( element.html )
+                .addClass( 'cloudItem' )
+                .css( {'top': element.top, 'left': element.left} )
+                .appendTo( $container );
 
-function showNode( nodeName, scroll, $container ) {
-    var node = nodes[ nodeName ];
-    var delay = 5000;
-    
-    if( typeof $container === 'undefined' ) {
-        $container = $( '#story' );
-    }
-    else {
-        $container = $( $container );
-    }
-    
-    if( typeof scroll === 'undefined' ) {
-        scroll = true;
-    }
-    
-    if( typeof currentNode.onExit === 'function' ) {
-        currentNode.onExit();
-    }
+            move( $div );
+        } );
+    };
 
-    if( scroll ) {
-        $( 'a', $container ).replaceWith( function() {
-            var $this = $( this );
-            return $( '<span></span>' )
-                .addClass( $this.attr( 'class' ) )
-                .addClass( 'oldLink' )
-                .html( $this.html() );
-        });
-    }
-    
-    currentNode = node;
-    myChoices.push( nodeName );
-    
-    if( typeof node === 'undefined' ) {
-        throw new Error( 'Programming error: node "' + nodeName + '" does not exist' );
-    }
-    else if( typeof node.content === 'undefined' ) {
-        throw new Error( 'Programming error: node "' + nodeName + '" has no content element' );
-    }
-    
-    var $node = $( '<div></div>' )
-        .addClass( 'node' )
-        .addClass( 'node-' + nodeName )
-        .html( node.content )
-        .hide()
-        .appendTo( $container )
-        .css( 'top', node.top )
-        .css( 'left', node.left )
-        .fadeTo( delay, 0.99 ); // prevents cleartype glitches
-        
-    var maxHeight = $( window ).height();
-    var maxWidth = $( window ).width();
-    
-    $( '.node' ).each( function() {
-        var $this = $( this );
-        maxHeight = Math.max( maxHeight, $this.position().top + $( window ).height() + $this.height() );
-        maxWidth = Math.max( maxWidth, $this.position().left + $( window ).width() + $this.width() );    
-    });
-    
-    $container.css({ height: maxHeight, width: maxWidth });
-        
-    if( scroll ) {
-        $container.animate({
-                'top': Math.min( 0, -$node.position().top + Math.max( 0, $( window ).height() / 2 - $node.height() / 2 ) ),
-                'left': Math.min( 0, -$node.position().left + Math.max( 0, $( window ).width() / 2 - $node.width() / 2 ) )
-            }, 
-            delay / 2, 
-            'easeOutCirc',
-            ( typeof node.onComplete === 'function' ) ? node.onComplete : $.noop
-        );
-    }
-    else if( typeof node.onComplete === 'function' ) {
-        node.onComplete();
-    }
-        
-    if( typeof node.onEnter === 'function' ) {
-        node.onEnter();
-    }
-}
-    
-function startStory() {
-    $( '<div></div>' )
-        .attr( 'id', 'story' )
-        .draggable({
-            'stop': function() {
-                // make sure the draggable story area stays on screen
+
+    /**
+     * Determine if a node (player choice) has been chosen
+     */
+    engine.nodeChosen = function( node ) {
+        return $.inArray( node, myChoices ) > -1;
+    };
+
+    engine.getChoices = function() {
+        return myChoices;
+    };
+
+    engine.showNode = function( nodeName, scroll, $container ) {
+        const node = engine.nodes[ nodeName ];
+        const delay = 5000;
+
+        if( typeof $container === 'undefined' ) {
+            $container = $( '#story' );
+        }
+        else {
+            $container = $( $container );
+        }
+
+        const scale = $container[0].getBoundingClientRect().width / $container[0].offsetWidth;
+
+        if( typeof scroll === 'undefined' ) {
+            scroll = true;
+        }
+
+        if( typeof currentNode.onExit === 'function' ) {
+            currentNode.onExit();
+        }
+
+        if( scroll ) {
+            $( 'a', $container ).replaceWith( function() {
+                const $this = $( this );
+
+                return $( '<span></span>' )
+                    .addClass( $this.attr( 'class' ) )
+                    .addClass( 'oldLink' )
+                    .html( $this.html() );
+            } );
+        }
+
+        currentNode = node;
+        myChoices.push( nodeName );
+
+        if( typeof node === 'undefined' ) {
+            throw new Error( 'Programming error: node "' + nodeName + '" does not exist' );
+        }
+        else if( typeof node.content === 'undefined' ) {
+            throw new Error( 'Programming error: node "' + nodeName + '" has no content element' );
+        }
+
+        const $node = $( '<div></div>' )
+            .addClass( 'node' )
+            .addClass( 'node-' + nodeName )
+            .html( node.content )
+            .hide()
+            .appendTo( $container )
+            .css( 'top', node.top )
+            .css( 'left', node.left )
+            .fadeTo( delay, 0.99 ); // prevents cleartype glitches
+
+        let maxHeight = $( window ).height();
+        let maxWidth = $( window ).width();
+
+        $( '.node' ).each( function() {
+            const $this = $( this );
+            maxHeight = Math.max( maxHeight, $this.position().top + $( window ).height() + $this.height() * scale );
+            maxWidth = Math.max( maxWidth, $this.position().left + $( window ).width() + $this.width() * scale );
+        } );
+
+        // $container.css({ height: maxHeight, width: maxWidth });
+
+        const centerTop = -( $node.offset().top - ( $( window ).height() - $node.height() * scale ) / 2 );
+        const centerLeft = -( $node.offset().left - ( $( window ).width() - $node.width() * scale ) / 2 );
+
+        if( scroll ) {
+            $container.animate( {
+                    'top': '+=' + centerTop + 'px',
+                    'left': '+=' + centerLeft + 'px'
+                },
+                delay / 2,
+                ( typeof node.onComplete === 'function' ) ? node.onComplete : $.noop
+            );
+        }
+        else if( typeof node.onComplete === 'function' ) {
+            node.onComplete();
+        }
+
+        if( typeof node.onEnter === 'function' ) {
+            node.onEnter();
+        }
+    };
+
+    function startStory() {
+        $( '<div></div>' )
+            .attr( 'id', 'story' )
+            .on( 'click', 'a', function( e ) {
+                e.preventDefault();
+
                 var $this = $( this );
-                var offset = $this.offset(); 
-                var animateProps = {};
-                
-                if( offset.left > 0 ) {
-                    animateProps.left = 0;
-                }
-                if( offset.top > 0 ) {
-                    animateProps.top = 0;
-                }
-                
-                if( offset.left + $this.width() < $( window ).width() ) {
-                    animateProps.left = $( window ).width() - $this.width();
-                }
-                if( offset.top + $this.height() < $( window ).height() ) {
-                    animateProps.top = $( window ).height() - $this.height();
-                }
-                
-                $this.animate( animateProps );
-            },
-            'start': function() {
-                $( this ).stop();
-            }
-        })
-        .on( 'click', 'a', function( e ) {
-            e.preventDefault();
+                var node = $this.attr( 'href' );
+                $this.addClass( 'chosenLink', 3000 );
 
-            var $this = $( this );
-            var node = $this.attr( 'href' );
-            $this.addClass( 'chosenLink', 3000 );
-            
-            try {
-                showNode( node );
+                try {
+                    engine.showNode( node );
+                }
+                catch(e) {
+                    $( '<div></div>' )
+                        .addClass( 'programming-error' )
+                        .text( e.message )
+                        .appendTo( 'body' );
+                }
+
+                return false;
+            } )
+            .appendTo( 'body' );
+
+        /** adapted from https://stackoverflow.com/a/7557433 */
+        function isElementInViewport (el) {
+            if( el instanceof jQuery ) {
+                el = el[0];
             }
-            catch( e ){
-                $( '<div></div>' )
-                    .addClass( 'programming-error' )
-                    .text( e.message )
-                    .appendTo( 'body' );
+
+            const rect = el.getBoundingClientRect();
+
+            return (
+                rect.bottom > 0 &&
+                rect.right > 0 &&
+                rect.top < (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.left < (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        interact( '#story' ).ignoreFrom( 'a' ).draggable({
+            inertia: true,
+            onstart: function( event ) {
+                const target = event.target;
+
+                target.setAttribute( 'data-startx', target.style.left );
+                target.setAttribute( 'data-starty', target.style.top );
+            },
+            onmove: function( event ) {
+                const target = event.target,
+                    // keep the dragged position in the data-x/data-y attributes
+                    x = (parseFloat( target.getAttribute( 'data-x' ) ) || 0) + event.dx,
+                    y = (parseFloat( target.getAttribute( 'data-y' ) ) || 0) + event.dy;
+
+                // translate the element
+                $( '#story' ).css({
+                    left: '+=' + event.dx + 'px',
+                    top: '+=' + event.dy + 'px'
+                });
+
+                // update the posiion attributes
+                target.setAttribute( 'data-x', x );
+                target.setAttribute( 'data-y', y );
+            },
+            onend: function( event ) {
+                // make sure the draggable story area stays on screen
+                const target = event.target;
+
+                let childrenInView = false;
+
+                $( '#story' ).children().each( function() {
+                    const $this = $( this );
+
+                    if( $this.is( ':visible' ) && isElementInViewport( $this ) ) {
+                        childrenInView = true;
+                        return false;
+                    }
+                });
+
+                if( !childrenInView ) {
+                    $( '#story' ).animate({
+                        left: target.getAttribute( 'data-startx' ),
+                        top: target.getAttribute( 'data-starty' )
+                    }, 300 );
+
+                }
             }
-            
-            return false;
-        })
-        .appendTo( 'body' );
-        
-    $( window ).one( 'mousewheel', function() {
-        notify( ( isIos ? 'Touch' : 'Click' ) + ' and drag anywhere to move the viewport.' );
-    });
-        
-    showNode( 'start' );
-}
+        });
+
+        const scale = function() {
+            const windowWidth = $( window ).width();
+            const windowHeight = $( window ).height();
+            const scale = Math.min( 1, windowWidth / 500 );
+            const $story = $( '#story' );
+            const $lastChild = $story.children().last();
+
+            $story.css( {
+                transform: 'scale(' + scale + ')'
+            });
+
+            if( $lastChild.length ) {
+                const newLeft = -( $lastChild.offset().left - ( windowWidth - $lastChild.width() * scale ) / 2 );
+                const newTop = -( $lastChild.offset().top - ( windowHeight - $lastChild.height() * scale ) / 2 );
+
+                $story.css( {
+                    left: '+=' + newLeft + 'px',
+                    top: '+=' + newTop + 'px'
+                } );
+            }
+        };
+
+        $( window ).on( 'resize orientationchange', scale );
+        scale();
+
+        engine.showNode( 'start' );
+    }
+    
+    window.engine = engine;
+})();

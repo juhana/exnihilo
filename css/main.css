@@ -66,23 +66,33 @@ html, body {
 	font-family: 'Donegal One', serif;
 }
 
+body {
+    background-color: #000;
+}
+
 a {
 	text-decoration: none;
 	cursor: pointer;
 }
 
 body.start {
-	background-color: #aaaaaa;
-	color: #000000;
+	background-color: #aaa;
+	color: #000;
+
+    -webkit-transition: background-color 3s;
+    transition: background-color 3s;
 }
 
 body.start a {
-	color: #ffffff;
+	color: #fff;
 }
 
 body.light, body.light input  {
-	background-color: #ffffff;
-	color: #000000;
+	background-color: #fff;
+	color: #000;
+
+	-webkit-transition: background-color 3s;
+	transition: background-color 3s;
 }
 
 body.light-now a {
@@ -90,12 +100,15 @@ body.light-now a {
 }
 
 body.light-now span.chosenLink {
-	color: #666666;
+	color: #666;
 }
 
 body.darkness, body.darkness input {
-	background-color: #000000;
-	color: #ffffff;
+	background-color: #000;
+	color: #fff;
+
+    -webkit-transition: background-color 3s;
+    transition: background-color 3s;
 }
 
 body.darkness-now a {
@@ -103,12 +116,12 @@ body.darkness-now a {
 }
 
 body.darkness-now span.chosenLink {
-	color: #cccccc;
+	color: #ccc;
 }
 
 #story {
-	min-width: 110%;
-	min-height: 110%;
+    width: 10000px;
+    height: 6000px;
 	position: relative;
 	top: -1000px;
 	left: -4760px;
@@ -281,12 +294,10 @@ body.light #itsMessage, body.darkness #myMessage {
 }
 
 #mute-button {
-	top: 40px;
+	top: 0;
+	right: 0;
 }
 
-#fullscreen-button {
-	top: 0px;
-}
 
 /* ==========================================================================
    Media Queries
